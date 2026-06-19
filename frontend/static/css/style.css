@@ -6,10 +6,10 @@
    ============================================================ */
 
 :root {
-  --bg:        #f5f6f8;
+  --bg:        #fffbfb;
   --surface:   #ffffff;
   --text:      #1f2933;
-  --muted:     #6b7280;
+  --muted:     #6d7583;
   --border:    #e3e6ea;
   --accent:    #15756e;   /* calm deep teal */
   --accent-dk: #0f5852;
