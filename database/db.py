@@ -13,12 +13,10 @@ import os
 import mysql.connector
 
 # ---- Connection settings -------------------------------------------------
-# Override any of these with environment variables if you prefer,
-# otherwise edit the defaults to match your local MySQL setup.
 DB_CONFIG = {
     "host":     os.environ.get("DB_HOST", "localhost"),
     "user":     os.environ.get("DB_USER", "root"),
-    "password": os.environ.get("DB_PASSWORD", ""),   # <-- set your MySQL password
+    "password": os.environ.get("DB_PASSWORD", ""),   # empty = no root password
     "database": os.environ.get("DB_NAME", "gym_db"),
 }
 
@@ -35,8 +33,6 @@ def query(sql, params=None, fetchone=False, commit=False):
       query("SELECT * FROM users")                 -> list of rows (dicts)
       query("SELECT ... WHERE id=%s", (5,), fetchone=True) -> single row or None
       query("INSERT ...", (...), commit=True)      -> new row id (lastrowid)
-
-    Rows come back as dictionaries so templates can use row['name'].
     """
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
