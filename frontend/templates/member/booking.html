@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Bookings{% endblock %}
+
+{% block content %}
+<h1>Book a session</h1>
+<p class="subtitle">Reserve a gym session, or an appointment with your
+   assigned trainer. We will not let two people take the same spot.</p>
+
+<div class="card">
+  <h2>New booking</h2>
+  <form method="post" action="{{ url_for('member_booking') }}">
+    <label for="booking_type">What are you booking?</label>
+    <select id="booking_type" name="booking_type" onchange="toggleTrainer()">
+      <option value="gym_session">Gym session</option>
+      <option value="appointment">Trainer appointment</option>
+    </select>
+
+    <div id="trainer_field" style="display:none">
+      <label for="trainer_id">Trainer</label>
+      {% if trainers %}
+        <select id="trainer_id" name="trainer_id">
+          {% for t in trainers %}
+            <option value="{{ t.trainer_id }}">{{ t.full_name }} — {{ t.specialization }}</option>
+          {% endfor %}
+        </select>
+      {% else %}
+        <p class="muted">No trainer is assigned to you yet, so trainer
+           appointments are not available. The admin assigns trainers.</p>
+      {% endif %}
+    </div>
+
+    <label for="slot_id">Time slot</label>
+    <select id="slot_id" name="slot_id" required>
+      {% for s in slots %}
+        <option value="{{ s.slot_id }}" {{ 'disabled' if s.remaining <= 0 }}>
+          {{ s.slot_date }} &middot; {{ s.start_time }}–{{ s.end_time }}
+          ({{ s.remaining }} left)
+        </option>
+      {% endfor %}
+    </select>
+
+    <button class="btn" type="submit">Request booking</button>
+  </form>
+</div>
+
+<div class="card">
+  <h2>Your bookings</h2>
+  {% if bookings %}
+    <table>
+      <tr><th>Date</th><th>Time</th><th>Type</th><th>Trainer</th><th>Status</th></tr>
+      {% for b in bookings %}
+      <tr>
+        <td>{{ b.slot_date }}</td>
+        <td>{{ b.start_time }} – {{ b.end_time }}</td>
+        <td>{{ 'Appointment' if b.booking_type == 'appointment' else 'Gym session' }}</td>
+        <td>{{ b.trainer_name or '—' }}</td>
+        <td><span class="badge {{ b.status }}">{{ b.status }}</span></td>
+      </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <p class="empty">You have not booked anything yet.</p>
+  {% endif %}
+</div>
+
+<script>
+  function toggleTrainer() {
+    var type = document.getElementById('booking_type').value;
+    document.getElementById('trainer_field').style.display =
+      (type === 'appointment') ? 'block' : 'none';
+  }
+</script>
+{% endblock %}

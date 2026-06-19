@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Workout plans{% endblock %}
+
+{% block content %}
+<h1>Workout plans</h1>
+<p class="subtitle">Create a personalised plan and assign it to a member.</p>
+
+<div class="card">
+  <h2>New workout plan</h2>
+  {% if members %}
+    <form method="post" action="{{ url_for('admin_workouts') }}">
+      <label for="member_id">For member</label>
+      <select id="member_id" name="member_id" required>
+        {% for m in members %}
+          <option value="{{ m.user_id }}">{{ m.full_name }}</option>
+        {% endfor %}
+      </select>
+
+      <label for="trainer_id">From trainer (optional)</label>
+      <select id="trainer_id" name="trainer_id">
+        <option value="">— none —</option>
+        {% for t in trainers %}
+          <option value="{{ t.trainer_id }}">{{ t.full_name }}</option>
+        {% endfor %}
+      </select>
+
+      <label for="title">Plan title</label>
+      <input type="text" id="title" name="title"
+             placeholder="e.g. Beginner full-body, 3 days a week" required>
+
+      <label for="description">Plan details</label>
+      <textarea id="description" name="description"
+                placeholder="List the exercises, sets and reps..." required></textarea>
+
+      <button class="btn" type="submit">Assign plan</button>
+    </form>
+  {% else %}
+    <p class="empty">There are no members to assign a plan to yet.</p>
+  {% endif %}
+</div>
+
+<div class="card">
+  <h2>Assigned plans</h2>
+  {% if plans %}
+    <table>
+      <tr><th>Member</th><th>Title</th><th>Trainer</th><th>Added</th></tr>
+      {% for p in plans %}
+      <tr>
+        <td>{{ p.member_name }}</td>
+        <td>{{ p.title }}</td>
+        <td>{{ p.trainer_name or '—' }}</td>
+        <td>{{ p.created_at.strftime('%d %b %Y') if p.created_at else '' }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <p class="empty">No workout plans assigned yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

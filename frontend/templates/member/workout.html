@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Workout plans{% endblock %}
+
+{% block content %}
+<h1>Your workout plans</h1>
+<p class="subtitle">Plans put together for you. Follow them at your own pace.</p>
+
+{% if workouts %}
+  {% for w in workouts %}
+    <div class="card">
+      <h2>{{ w.title }}</h2>
+      <p class="muted">
+        {% if w.trainer_name %}By {{ w.trainer_name }} &middot; {% endif %}
+        Added {{ w.created_at.strftime('%d %b %Y') if w.created_at else '' }}
+      </p>
+      <p style="white-space: pre-line">{{ w.description }}</p>
+    </div>
+  {% endfor %}
+{% else %}
+  <div class="card">
+    <p class="empty">You do not have a workout plan yet. Once the admin assigns
+       one, it will show up here.</p>
+  </div>
+{% endif %}
+{% endblock %}

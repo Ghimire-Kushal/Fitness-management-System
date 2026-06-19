@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+{% block container_class %}narrow{% endblock %}
+
+{% block content %}
+<h1>Create your account</h1>
+<p class="subtitle">Register as a member. You can choose a membership plan
+   right after you log in.</p>
+
+<div class="card">
+  <form method="post" action="{{ url_for('register') }}">
+    <label for="full_name">Full name</label>
+    <input type="text" id="full_name" name="full_name" required>
+
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="phone">Phone (optional)</label>
+    <input type="text" id="phone" name="phone">
+
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" required>
+
+    <button class="btn" type="submit">Create account</button>
+  </form>
+</div>
+
+<p class="muted">Already a member? <a href="{{ url_for('login') }}">Log in</a>.</p>
+{% endblock %}

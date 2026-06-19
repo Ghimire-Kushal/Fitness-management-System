@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Profile{% endblock %}
+{% block container_class %}narrow{% endblock %}
+
+{% block content %}
+<h1>Your profile</h1>
+<p class="subtitle">Update your details. Leave the password blank to keep
+   your current one.</p>
+
+<div class="card">
+  <form method="post" action="{{ url_for('member_profile') }}">
+    <label for="full_name">Full name</label>
+    <input type="text" id="full_name" name="full_name"
+           value="{{ profile.full_name }}" required>
+
+    <label>Email</label>
+    <input type="email" value="{{ profile.email }}" disabled>
+
+    <label for="phone">Phone</label>
+    <input type="text" id="phone" name="phone" value="{{ profile.phone or '' }}">
+
+    <label for="password">New password</label>
+    <input type="password" id="password" name="password"
+           placeholder="Leave blank to keep current password">
+
+    <button class="btn" type="submit">Save changes</button>
+  </form>
+</div>
+{% endblock %}

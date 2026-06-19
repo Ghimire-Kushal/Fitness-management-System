@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Manage bookings{% endblock %}
+
+{% block content %}
+<h1>Bookings</h1>
+<p class="subtitle">Approve pending bookings and mark finished ones as completed.</p>
+
+<div class="card">
+  {% if bookings %}
+    <table>
+      <tr><th>Member</th><th>Type</th><th>Trainer</th><th>Date</th><th>Time</th><th>Status</th><th>Action</th></tr>
+      {% for b in bookings %}
+      <tr>
+        <td>{{ b.member_name }}</td>
+        <td>{{ 'Appointment' if b.booking_type == 'appointment' else 'Gym session' }}</td>
+        <td>{{ b.trainer_name or '—' }}</td>
+        <td>{{ b.slot_date }}</td>
+        <td>{{ b.start_time }} – {{ b.end_time }}</td>
+        <td><span class="badge {{ b.status }}">{{ b.status }}</span></td>
+        <td class="row-actions">
+          {% if b.status == 'pending' %}
+            <form class="inline-form" method="post" action="{{ url_for('admin_bookings') }}">
+              <input type="hidden" name="booking_id" value="{{ b.booking_id }}">
+              <input type="hidden" name="status" value="approved">
+              <button class="btn btn-small" type="submit">Approve</button>
+            </form>
+          {% elif b.status == 'approved' %}
+            <form class="inline-form" method="post" action="{{ url_for('admin_bookings') }}">
+              <input type="hidden" name="booking_id" value="{{ b.booking_id }}">
+              <input type="hidden" name="status" value="completed">
+              <button class="btn btn-small btn-plain" type="submit">Mark completed</button>
+            </form>
+          {% else %}
+            <span class="muted">—</span>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <p class="empty">No bookings to manage.</p>
+  {% endif %}
+</div>
+{% endblock %}
