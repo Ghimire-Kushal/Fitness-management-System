@@ -78,7 +78,7 @@ def register():
             """INSERT INTO users (full_name, email, password, phone, role_id)
                VALUES (%s, %s, %s, %s,
                        (SELECT role_id FROM roles WHERE role_name='Member'))""",
-            (full_name, email, generate_password_hash(password), phone),
+            (full_name, email, generate_password_hash(password, method='pbkdf2:sha256'), phone),
             commit=True,
         )
         flash("Account created. Please log in.", "success")
@@ -339,7 +339,7 @@ def member_profile():
                  (full_name, phone, uid), commit=True)
         if password:
             db.query("UPDATE users SET password=%s WHERE user_id=%s",
-                     (generate_password_hash(password), uid), commit=True)
+                     (generate_password_hash(password, method='pbkdf2:sha256'), uid), commit=True)
         session["full_name"] = full_name
         flash("Profile updated.", "success")
         return redirect(url_for("member_profile"))
@@ -447,7 +447,7 @@ def admin_trainers():
             """INSERT INTO users (full_name, email, password, role_id)
                VALUES (%s, %s, %s,
                        (SELECT role_id FROM roles WHERE role_name='Trainer'))""",
-            (full_name, email, generate_password_hash(password)), commit=True,
+            (full_name, email, generate_password_hash(password, method='pbkdf2:sha256')), commit=True,
         )
         db.query(
             """INSERT INTO trainer_profiles (user_id, specialization, bio)
