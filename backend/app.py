@@ -65,7 +65,7 @@ def register():
         password = request.form.get("password", "")
 
         if not full_name or not email or not password:
-            flash("Name, email and password are required.", "error")
+            flash("Name, email and password are mostly needed or required.", "error")
             return redirect(url_for("register"))
 
         existing = db.query("SELECT user_id FROM users WHERE email=%s",
