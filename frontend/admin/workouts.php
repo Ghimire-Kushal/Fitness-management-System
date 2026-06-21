@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/../db.php';
+require_once __DIR__ . '/../../database/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_role('Admin');
 
@@ -12,8 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$member_id || !$title_input || !$description) {
         set_flash('error', 'Member, title and description are required.');
-        header('Location: /php/admin/workouts.php');
-        exit;
+        redirect_to('/admin/workouts.php');
     }
 
     db_exec(
@@ -21,8 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         [$member_id, $trainer_id, $title_input, $description]
     );
     set_flash('success', 'Workout plan assigned to member.');
-    header('Location: /php/admin/workouts.php');
-    exit;
+    redirect_to('/admin/workouts.php');
 }
 
 $members = db_query(
@@ -53,7 +51,7 @@ include __DIR__ . '/../includes/header.php';
 <div class="card">
   <h2>New workout plan</h2>
   <?php if ($members): ?>
-    <form method="post" action="/php/admin/workouts.php">
+    <form method="post" action="<?= htmlspecialchars(url_path('/admin/workouts.php')) ?>">
       <label for="member_id">For member</label>
       <select id="member_id" name="member_id" required>
         <?php foreach ($members as $m): ?>

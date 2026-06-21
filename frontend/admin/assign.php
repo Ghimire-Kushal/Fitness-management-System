@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/../db.php';
+require_once __DIR__ . '/../../database/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_role('Admin');
 
@@ -19,8 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 [$member_id, $trainer_id]);
         set_flash('success', 'Trainer assigned to member.');
     }
-    header('Location: /php/admin/assign.php');
-    exit;
+    redirect_to('/admin/assign.php');
 }
 
 $members = db_query(
@@ -52,7 +51,7 @@ include __DIR__ . '/../includes/header.php';
 <div class="card">
   <h2>New assignment</h2>
   <?php if ($members && $trainers): ?>
-    <form method="post" action="/php/admin/assign.php">
+    <form method="post" action="<?= htmlspecialchars(url_path('/admin/assign.php')) ?>">
       <label for="member_id">Member</label>
       <select id="member_id" name="member_id" required>
         <?php foreach ($members as $m): ?>

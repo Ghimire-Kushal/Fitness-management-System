@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/../database/db.php';
 require_once __DIR__ . '/includes/auth.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -11,15 +11,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$full_name || !$email || !$password) {
         set_flash('error', 'Name, email and password are required.');
-        header('Location: /php/register.php');
-        exit;
+        redirect_to('/register.php');
     }
 
     $existing = db_query('SELECT user_id FROM users WHERE email=?', [$email], true);
     if ($existing) {
         set_flash('error', 'That email is already registered. Try logging in.');
-        header('Location: /php/register.php');
-        exit;
+        redirect_to('/register.php');
     }
 
     $role = db_query("SELECT role_id FROM roles WHERE role_name='Member'", [], true);
@@ -29,8 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     );
 
     set_flash('success', 'Account created. Please log in.');
-    header('Location: /php/login.php');
-    exit;
+    redirect_to('/login.php');
 }
 
 $title  = 'Register';
@@ -42,7 +39,7 @@ include __DIR__ . '/includes/header.php';
 <p class="subtitle">Register as a member. You can choose a membership plan right after you log in.</p>
 
 <div class="card">
-  <form method="post" action="/php/register.php">
+  <form method="post" action="<?= htmlspecialchars(url_path('/register.php')) ?>">
     <label for="full_name">Full name</label>
     <input type="text" id="full_name" name="full_name" required>
 
@@ -59,6 +56,6 @@ include __DIR__ . '/includes/header.php';
   </form>
 </div>
 
-<p class="muted">Already a member? <a href="/php/login.php">Log in</a>.</p>
+<p class="muted">Already a member? <a href="<?= htmlspecialchars(url_path('/login.php')) ?>">Log in</a>.</p>
 
 <?php include __DIR__ . '/includes/footer.php'; ?>

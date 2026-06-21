@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/../db.php';
+require_once __DIR__ . '/../../database/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_role('Member');
 
@@ -50,7 +50,7 @@ include __DIR__ . '/../includes/header.php';
     <p class="muted">Valid <?= htmlspecialchars($membership['start_date']) ?> to <?= htmlspecialchars($membership['end_date']) ?></p>
   <?php else: ?>
     <p class="empty">You have not chosen a plan yet.</p>
-    <a class="btn btn-small" href="/php/member/membership.php">Choose a plan</a>
+    <a class="btn btn-small" href="<?= htmlspecialchars(url_path('/member/membership.php')) ?>">Choose a plan</a>
   <?php endif; ?>
 </div>
 
@@ -71,7 +71,7 @@ include __DIR__ . '/../includes/header.php';
     </table>
   <?php else: ?>
     <p class="empty">No bookings yet.</p>
-    <a class="btn btn-small" href="/php/member/booking.php">Book a session</a>
+    <a class="btn btn-small" href="<?= htmlspecialchars(url_path('/member/booking.php')) ?>">Book a session</a>
   <?php endif; ?>
 </div>
 
@@ -90,7 +90,7 @@ include __DIR__ . '/../includes/header.php';
   <h2>Workout plans</h2>
   <?php if ($workouts): ?>
     <p>You have <?= count($workouts) ?> plan(s).
-       <a href="/php/member/workout.php">View them</a>.</p>
+       <a href="<?= htmlspecialchars(url_path('/member/workout.php')) ?>">View them</a>.</p>
   <?php else: ?>
     <p class="empty">No workout plan assigned yet.</p>
   <?php endif; ?>

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/../db.php';
+require_once __DIR__ . '/../../database/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_role('Member');
 
@@ -13,8 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$full_name) {
         set_flash('error', 'Name cannot be empty.');
-        header('Location: /php/member/profile.php');
-        exit;
+        redirect_to('/member/profile.php');
     }
 
     db_exec('UPDATE users SET full_name=?, phone=? WHERE user_id=?', [$full_name, $phone, $uid]);
@@ -24,8 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     $_SESSION['user']['full_name'] = $full_name;
     set_flash('success', 'Profile updated.');
-    header('Location: /php/member/profile.php');
-    exit;
+    redirect_to('/member/profile.php');
 }
 
 $profile = db_query('SELECT * FROM users WHERE user_id=?', [$uid], true);
@@ -39,7 +37,7 @@ include __DIR__ . '/../includes/header.php';
 <p class="subtitle">Update your details. Leave the password blank to keep your current one.</p>
 
 <div class="card">
-  <form method="post" action="/php/member/profile.php">
+  <form method="post" action="<?= htmlspecialchars(url_path('/member/profile.php')) ?>">
     <label for="full_name">Full name</label>
     <input type="text" id="full_name" name="full_name"
            value="<?= htmlspecialchars($profile['full_name']) ?>" required>

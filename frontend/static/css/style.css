@@ -117,6 +117,8 @@ textarea { min-height: 96px; resize: vertical; }
 .btn-small { margin: 0; padding: 6px 12px; font-size: 0.85rem; }
 .btn-plain { background: #eef0f3; color: var(--text); }
 .btn-plain:hover { background: #e1e4e9; }
+.btn-danger { background: #e53e3e; color: #fff; }
+.btn-danger:hover { background: #c53030; }
 
 /* ---- Tables ---- */
 table { width: 100%; border-collapse: collapse; font-size: 0.94rem; }

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/../db.php';
+require_once __DIR__ . '/../../database/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_role('Member');
 
@@ -14,8 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $slot = db_query('SELECT * FROM time_slots WHERE slot_id=?', [$slot_id], true);
     if (!$slot || !in_array($booking_type, ['gym_session', 'appointment'])) {
         set_flash('error', 'Please choose a valid slot and booking type.');
-        header('Location: /php/member/booking.php');
-        exit;
+        redirect_to('/member/booking.php');
     }
 
     $dup = db_query(
@@ -24,15 +23,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     );
     if ($dup) {
         set_flash('error', 'You have already booked that slot.');
-        header('Location: /php/member/booking.php');
-        exit;
+        redirect_to('/member/booking.php');
     }
 
     $taken = db_query('SELECT COUNT(*) AS c FROM bookings WHERE slot_id=?', [$slot_id], true)['c'];
     if ($taken >= $slot['capacity']) {
         set_flash('error', 'That slot is full. Please pick another time.');
-        header('Location: /php/member/booking.php');
-        exit;
+        redirect_to('/member/booking.php');
     }
 
     if ($booking_type === 'appointment') {
@@ -42,8 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         );
         if (!$assigned) {
             set_flash('error', 'You can only book a trainer assigned to you by the admin.');
-            header('Location: /php/member/booking.php');
-            exit;
+            redirect_to('/member/booking.php');
         }
         $busy = db_query(
             "SELECT COUNT(*) AS c FROM bookings WHERE slot_id=? AND trainer_id=? AND booking_type='appointment'",
@@ -51,8 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         )['c'];
         if ($busy >= 1) {
             set_flash('error', 'That trainer is already booked for this slot.');
-            header('Location: /php/member/booking.php');
-            exit;
+            redirect_to('/member/booking.php');
         }
     } else {
         $trainer_id = null;
@@ -63,8 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         [$uid, $slot_id, $trainer_id, $booking_type]
     );
     set_flash('success', 'Booking requested. It is now pending approval.');
-    header('Location: /php/member/booking.php');
-    exit;
+    redirect_to('/member/booking.php');
 }
 
 $slots = db_query(
@@ -102,7 +96,7 @@ include __DIR__ . '/../includes/header.php';
 
 <div class="card">
   <h2>New booking</h2>
-  <form method="post" action="/php/member/booking.php">
+  <form method="post" action="<?= htmlspecialchars(url_path('/member/booking.php')) ?>">
     <label for="booking_type">What are you booking?</label>
     <select id="booking_type" name="booking_type" onchange="toggleTrainer()">
       <option value="gym_session">Gym session</option>
