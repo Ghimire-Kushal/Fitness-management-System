@@ -18,16 +18,16 @@ INSERT INTO roles (role_name) VALUES ('Admin'), ('Trainer'), ('Member');
 -- role_id: 1=Admin, 2=Trainer, 3=Member
 INSERT INTO users (full_name, email, password, phone, role_id) VALUES
 ('Gym Administrator', 'admin@gym.com',
- 'scrypt:32768:8:1$1qEhyogSwqxLgmcS$5f0ebc835f0927ea32548f7bed83f7135d6a06ad567bf225be11efeeb3ce1b4fb2092dc7eaaf6a53dace21606c9a19311c43fee690adf4e5e0864cb9ad0221de',
+ '$2y$12$vl3XgW1LhUAiaFbKEnlkROIEmKAvRRx1UM/RbHDp51Oq63rGe4X2e',
  '9800000000', 1),
 ('Ramesh Thapa', 'ramesh@gym.com',
- 'scrypt:32768:8:1$76qwjJeGKQ0gpQGp$4c528ab00edf31e6c85b7d4e316a88c01ed550501240e4f7cc18be65df1418c113aa85418f6136b49d7813f77832f03af8a4d2668590fdf264863d086eaaacee',
+ '$2y$12$niaLSTCejuT9PgvPcmgKCuOM6pj6qqGfKHYwOQ8ci8ZjJJ.ItPr5q',
  '9811111111', 2),
 ('Sunita Gurung', 'sunita@gym.com',
- 'scrypt:32768:8:1$76qwjJeGKQ0gpQGp$4c528ab00edf31e6c85b7d4e316a88c01ed550501240e4f7cc18be65df1418c113aa85418f6136b49d7813f77832f03af8a4d2668590fdf264863d086eaaacee',
+ '$2y$12$niaLSTCejuT9PgvPcmgKCuOM6pj6qqGfKHYwOQ8ci8ZjJJ.ItPr5q',
  '9822222222', 2),
 ('Sita Sharma', 'sita@gym.com',
- 'scrypt:32768:8:1$dIkxa7D5lCRl8cwO$0a9370dc881e5cbd827361560a2632ab728f914b79086f6af43fb5a96d02ac27afeedb3bca2c6a912b5ee9fd196c70bb3d23c624aefea4ea7ff1108a6689d264',
+ '$2y$12$7kjOc3kr/UUMMe7ByYSOruwpYW1FNuJK1Ff9JxwekfePqfUK5E9bK',
  '9833333333', 3);
 
 -- Trainer profiles (link the two trainer users above) --------

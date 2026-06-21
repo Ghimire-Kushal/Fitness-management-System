@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/../db.php';
+require_once __DIR__ . '/../../database/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_role('Admin');
 
@@ -49,7 +49,7 @@ include __DIR__ . '/../includes/header.php';
       </tr>
       <?php endforeach; ?>
     </table>
-    <p style="margin-top:14px"><a href="/php/admin/bookings.php">Manage all bookings</a></p>
+    <p style="margin-top:14px"><a href="<?= htmlspecialchars(url_path('/admin/bookings.php')) ?>">Manage all bookings</a></p>
   <?php else: ?>
     <p class="empty">No bookings yet.</p>
   <?php endif; ?>

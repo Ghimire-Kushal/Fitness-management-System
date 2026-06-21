@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/../db.php';
+require_once __DIR__ . '/../../database/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_role('Member');
 
@@ -12,8 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$plan) {
         set_flash('error', 'Please choose a valid plan.');
-        header('Location: /php/member/membership.php');
-        exit;
+        redirect_to('/member/membership.php');
     }
 
     $days  = $plan['duration_type'] === 'yearly' ? 365 : 30;
@@ -27,8 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     );
 
     set_flash('success', "You are now on the {$plan['plan_name']} plan.");
-    header('Location: /php/member/dashboard.php');
-    exit;
+    redirect_to('/member/dashboard.php');
 }
 
 $plans   = db_query('SELECT * FROM membership_plans ORDER BY price');
@@ -55,7 +53,7 @@ include __DIR__ . '/../includes/header.php';
 
 <div class="card">
   <h2>Choose a plan</h2>
-  <form method="post" action="/php/member/membership.php">
+  <form method="post" action="<?= htmlspecialchars(url_path('/member/membership.php')) ?>">
     <table>
       <tr><th></th><th>Plan</th><th>Type</th><th>Price</th><th>Includes</th></tr>
       <?php foreach ($plans as $i => $p): ?>

@@ -1,7 +1,13 @@
 <?php
 session_start();
-require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/../database/db.php';
 require_once __DIR__ . '/includes/auth.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && current_user()) {
+    redirect_to(current_user()['role'] === 'Admin'
+        ? '/admin/dashboard.php'
+        : '/member/dashboard.php');
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email    = strtolower(trim($_POST['email'] ?? ''));
@@ -18,17 +24,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'user_id'   => $row['user_id'],
             'full_name' => $row['full_name'],
             'email'     => $row['email'],
-            'role'      => $row['role_name'],
+            'role'      => $row['role'],
         ];
-        header($row['role_name'] === 'Admin'
-            ? 'Location: /php/admin/dashboard.php'
-            : 'Location: /php/member/dashboard.php');
-        exit;
+        redirect_to($row['role'] === 'Admin'
+            ? '/admin/dashboard.php'
+            : '/member/dashboard.php');
     }
 
     set_flash('error', 'Email or password is incorrect.');
-    header('Location: /php/login.php');
-    exit;
+    redirect_to('/login.php');
 }
 
 $title  = 'Log in';
@@ -40,7 +44,7 @@ include __DIR__ . '/includes/header.php';
 <p class="subtitle">Welcome back. Enter your details to continue.</p>
 
 <div class="card">
-  <form method="post" action="/php/login.php">
+  <form method="post" action="<?= htmlspecialchars(url_path('/login.php')) ?>">
     <label for="email">Email</label>
     <input type="email" id="email" name="email" required>
 
@@ -51,6 +55,6 @@ include __DIR__ . '/includes/header.php';
   </form>
 </div>
 
-<p class="muted">New here? <a href="/php/register.php">Create a member account</a>.</p>
+<p class="muted">New here? <a href="<?= htmlspecialchars(url_path('/register.php')) ?>">Create a member account</a>.</p>
 
 <?php include __DIR__ . '/includes/footer.php'; ?>

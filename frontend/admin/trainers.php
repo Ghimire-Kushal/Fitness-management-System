@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/../db.php';
+require_once __DIR__ . '/../../database/db.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_role('Admin');
 
@@ -13,13 +13,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$full_name || !$email || !$password) {
         set_flash('error', 'Name, email and password are required.');
-        header('Location: /php/admin/trainers.php');
-        exit;
+        redirect_to('/admin/trainers.php');
     }
     if (db_query('SELECT user_id FROM users WHERE email=?', [$email], true)) {
         set_flash('error', 'That email is already in use.');
-        header('Location: /php/admin/trainers.php');
-        exit;
+        redirect_to('/admin/trainers.php');
     }
 
     $role   = db_query("SELECT role_id FROM roles WHERE role_name='Trainer'", [], true);
@@ -33,8 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     );
 
     set_flash('success', 'Trainer added.');
-    header('Location: /php/admin/trainers.php');
-    exit;
+    redirect_to('/admin/trainers.php');
 }
 
 $trainers = db_query(
@@ -52,7 +49,7 @@ include __DIR__ . '/../includes/header.php';
 
 <div class="card">
   <h2>Add a trainer</h2>
-  <form method="post" action="/php/admin/trainers.php">
+  <form method="post" action="<?= htmlspecialchars(url_path('/admin/trainers.php')) ?>">
     <label for="full_name">Full name</label>
     <input type="text" id="full_name" name="full_name" required>
 
