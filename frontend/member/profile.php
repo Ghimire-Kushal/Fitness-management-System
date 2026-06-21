@@ -50,7 +50,7 @@ include __DIR__ . '/../includes/header.php';
 
     <label for="password">New password</label>
     <input type="password" id="password" name="password"
-           placeholder="Leave blank to keep current password">
+           >
 
     <button class="btn" type="submit">Save changes</button>
   </form>

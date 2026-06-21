@@ -69,11 +69,11 @@ include __DIR__ . '/../includes/header.php';
 
       <label for="plan_title">Plan title</label>
       <input type="text" id="plan_title" name="title"
-             placeholder="e.g. Beginner full-body, 3 days a week" required>
+             required>
 
       <label for="description">Plan details</label>
       <textarea id="description" name="description"
-                placeholder="List the exercises, sets and reps..." required></textarea>
+                required></textarea>
 
       <button class="btn" type="submit">Assign plan</button>
     </form>

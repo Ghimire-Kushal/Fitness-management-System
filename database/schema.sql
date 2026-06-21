@@ -1,9 +1,3 @@
--- ============================================================
---  GYM MANAGEMENT SYSTEM  -  DATABASE SCHEMA
---  Owner: Person 1 (Database)
---  Run this first:  mysql -u root -p < schema.sql
--- ============================================================
-
 DROP DATABASE IF EXISTS gym_db;
 CREATE DATABASE gym_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE gym_db;

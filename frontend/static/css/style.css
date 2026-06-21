@@ -2,12 +2,12 @@
   --bg:        #fffbfb;
   --surface:   #ffffff;
   --text:      #1f2933;
-  --muted:     #6d7583;
+  --muted:     #29354b;
   --border:    #e3e6ea;
-  --accent:    #15756e;   /* calm deep teal */
-  --accent-dk: #0f5852;
+  --accent:    #34938d;
+  --accent-dk: #68b5af;
   --danger:    #b4453c;
-  --ok:        #2f7a45;
+  --ok:        #463ca1;
   --radius:    8px;
 }
 
@@ -99,6 +99,7 @@ input:focus, select:focus, textarea:focus {
   outline-offset: 0;
   border-color: var(--accent);
 }
+input:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; }
 textarea { min-height: 96px; resize: vertical; }
 
 .btn {
@@ -111,12 +112,14 @@ textarea { min-height: 96px; resize: vertical; }
   border-radius: 6px;
   font-size: 0.97rem;
   font-weight: 600;
+  font-family: inherit;
   cursor: pointer;
+  text-decoration: none;
 }
-.btn:hover { background: var(--accent-dk); text-decoration: none; }
+.btn:hover { background: var(--accent-dk); text-decoration: none; color: #fff; }
 .btn-small { margin: 0; padding: 6px 12px; font-size: 0.85rem; }
-.btn-plain { background: #eef0f3; color: var(--text); }
-.btn-plain:hover { background: #e1e4e9; }
+.btn-plain { background: #eef0f3; color: var(--text); box-shadow: none; }
+.btn-plain:hover { background: #e1e4e9; color: var(--text); }
 .btn-danger { background: #e53e3e; color: #fff; }
 .btn-danger:hover { background: #c53030; }
 
@@ -131,6 +134,8 @@ tr:last-child td { border-bottom: none; }
 .badge.pending   { background: #fdf3e3; color: #9a6b14; }
 .badge.approved  { background: #e6f1ea; color: var(--ok); }
 .badge.completed { background: #e8ecf1; color: #475569; }
+.badge.active    { background: #e6f1ea; color: var(--ok); }
+.badge.expired   { background: #fbe9e7; color: var(--danger); }
 
 /* ---- Flash messages ---- */
 .flash { padding: 11px 16px; border-radius: 6px; margin-bottom: 14px; font-size: 0.94rem; }
@@ -140,7 +145,7 @@ tr:last-child td { border-bottom: none; }
 /* ---- Misc ---- */
 .muted { color: var(--muted); }
 .empty { color: var(--muted); padding: 8px 0; }
-.row-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.row-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
 .inline-form { display: inline; }
 hr { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
 
