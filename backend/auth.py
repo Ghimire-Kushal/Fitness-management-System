@@ -40,7 +40,7 @@ def login_required(view):
     @wraps(view)
     def wrapped(*args, **kwargs):
         if current_user() is None:
-            flash("Please log in to continue.", "error")
+            flash("Please be logged in to continue into the system.", "error")
             return redirect(url_for("login"))
         return view(*args, **kwargs)
     return wrapped
@@ -53,7 +53,7 @@ def role_required(role_name):
         def wrapped(*args, **kwargs):
             user = current_user()
             if user is None:
-                flash("Please log in to continue.", "error")
+                flash("Please be log in to continue.", "error")
                 return redirect(url_for("login"))
             if user["role"] != role_name:
                 flash("You do not have access to that page.", "error")
