@@ -13,12 +13,19 @@ import os
 import mysql.connector
 
 # ---- Connection settings -------------------------------------------------
+# DB_CONFIG = {
+#     "host":     os.environ.get("DB_HOST", "127.0.0.1"),
+#     "port":     int(os.environ.get("DB_PORT", "3306")),  # match phpMyAdmin's port
+#     "user":     os.environ.get("DB_USER", "root"),
+#     "password": os.environ.get("DB_PASSWORD", ""),       # empty = no root password
+#     "database": os.environ.get("DB_NAME", "gym_db"),
+# }
 DB_CONFIG = {
-    "host":     os.environ.get("DB_HOST", "127.0.0.1"),
-    "port":     int(os.environ.get("DB_PORT", "3306")),  # match phpMyAdmin's port
-    "user":     os.environ.get("DB_USER", "root"),
-    "password": os.environ.get("DB_PASSWORD", ""),       # empty = no root password
-    "database": os.environ.get("DB_NAME", "gym_db"),
+    "host":     "127.0.0.1",
+    "port":     int(os.environ.get("DB_PORT", "3306")),  # <- the port from Step 1
+    "user":     "root",
+    "password": "",
+    "database": "gym_db",
 }
 
 
