@@ -1,52 +1,52 @@
--- ============================================================
---  GYM MANAGEMENT SYSTEM  -  SEED DATA
---  Owner: Person 1 (Database)
---  Run after schema.sql:  mysql -u root -p gym_db < seed.sql
---
---  Default logins (password shown in plain text here only for
---  your team; the DB stores a secure hash):
---    Admin   : admin@gym.com    / admin123
---    Trainer : ramesh@gym.com   / trainer123   (no login flow, see README)
---    Member  : sita@gym.com     / member123
--- ============================================================
-USE gym_db;
+-- -- ============================================================
+-- --  GYM MANAGEMENT SYSTEM  -  SEED DATA
+-- --  Owner: Person 1 (Database)
+-- --  Run after schema.sql:  mysql -u root -p gym_db < seed.sql
+-- --
+-- --  Default logins (password shown in plain text here only for
+-- --  your team; the DB stores a secure hash):
+-- --    Admin   : admin@gym.com    / admin123
+-- --    Trainer : ramesh@gym.com   / trainer123   (no login flow, see README)
+-- --    Member  : sita@gym.com     / member123
+-- -- ============================================================
+-- USE gym_db;
 
--- Roles -------------------------------------------------------
-INSERT INTO roles (role_name) VALUES ('Admin'), ('Trainer'), ('Member');
+-- -- Roles -------------------------------------------------------
+-- INSERT INTO roles (role_name) VALUES ('Admin'), ('Trainer'), ('Member');
 
--- Users -------------------------------------------------------
--- role_id: 1=Admin, 2=Trainer, 3=Member
-INSERT INTO users (full_name, email, password, phone, role_id) VALUES
-('Gym Administrator', 'admin@gym.com',
- '$2y$12$vl3XgW1LhUAiaFbKEnlkROIEmKAvRRx1UM/RbHDp51Oq63rGe4X2e',
- '9800000000', 1),
-('Ramesh Thapa', 'ramesh@gym.com',
- '$2y$12$niaLSTCejuT9PgvPcmgKCuOM6pj6qqGfKHYwOQ8ci8ZjJJ.ItPr5q',
- '9811111111', 2),
-('Sunita Gurung', 'sunita@gym.com',
- '$2y$12$niaLSTCejuT9PgvPcmgKCuOM6pj6qqGfKHYwOQ8ci8ZjJJ.ItPr5q',
- '9822222222', 2),
-('Sita Sharma', 'sita@gym.com',
- '$2y$12$7kjOc3kr/UUMMe7ByYSOruwpYW1FNuJK1Ff9JxwekfePqfUK5E9bK',
- '9833333333', 3);
+-- -- Users -------------------------------------------------------
+-- -- role_id: 1=Admin, 2=Trainer, 3=Member
+-- INSERT INTO users (full_name, email, password, phone, role_id) VALUES
+-- ('Gym Administrator', 'admin@gym.com',
+--  '$2y$12$vl3XgW1LhUAiaFbKEnlkROIEmKAvRRx1UM/RbHDp51Oq63rGe4X2e',
+--  '9800000000', 1),
+-- ('Ramesh Thapa', 'ramesh@gym.com',
+--  '$2y$12$niaLSTCejuT9PgvPcmgKCuOM6pj6qqGfKHYwOQ8ci8ZjJJ.ItPr5q',
+--  '9811111111', 2),
+-- ('Sunita Gurung', 'sunita@gym.com',
+--  '$2y$12$niaLSTCejuT9PgvPcmgKCuOM6pj6qqGfKHYwOQ8ci8ZjJJ.ItPr5q',
+--  '9822222222', 2),
+-- ('Sita Sharma', 'sita@gym.com',
+--  '$2y$12$7kjOc3kr/UUMMe7ByYSOruwpYW1FNuJK1Ff9JxwekfePqfUK5E9bK',
+--  '9833333333', 3);
 
--- Trainer profiles (link the two trainer users above) --------
-INSERT INTO trainer_profiles (user_id, specialization, bio) VALUES
-(2, 'Strength & Conditioning', 'Eight years coaching powerlifting and general strength.'),
-(3, 'Yoga & Mobility',         'Certified yoga instructor focused on flexibility and recovery.');
+-- -- Trainer profiles (link the two trainer users above) --------
+-- INSERT INTO trainer_profiles (user_id, specialization, bio) VALUES
+-- (2, 'Strength & Conditioning', 'Eight years coaching powerlifting and general strength.'),
+-- (3, 'Yoga & Mobility',         'Certified yoga instructor focused on flexibility and recovery.');
 
--- Membership plans -------------------------------------------
-INSERT INTO membership_plans (plan_name, duration_type, price, description) VALUES
-('Monthly Basic',  'monthly', 1500.00, 'Full gym floor access for one month.'),
-('Monthly Plus',   'monthly', 2500.00, 'Gym access plus group classes for one month.'),
-('Yearly Basic',   'yearly', 15000.00, 'Full gym floor access for twelve months.'),
-('Yearly Plus',    'yearly', 25000.00, 'Gym access plus group classes for twelve months.');
+-- -- Membership plans -------------------------------------------
+-- INSERT INTO membership_plans (plan_name, duration_type, price, description) VALUES
+-- ('Monthly Basic',  'monthly', 1500.00, 'Full gym floor access for one month.'),
+-- ('Monthly Plus',   'monthly', 2500.00, 'Gym access plus group classes for one month.'),
+-- ('Yearly Basic',   'yearly', 15000.00, 'Full gym floor access for twelve months.'),
+-- ('Yearly Plus',    'yearly', 25000.00, 'Gym access plus group classes for twelve months.');
 
--- Time slots (a few sample sessions) -------------------------
-INSERT INTO time_slots (slot_date, start_time, end_time, capacity) VALUES
-(CURDATE() + INTERVAL 1 DAY, '06:00:00', '07:00:00', 10),
-(CURDATE() + INTERVAL 1 DAY, '07:00:00', '08:00:00', 10),
-(CURDATE() + INTERVAL 1 DAY, '17:00:00', '18:00:00', 8),
-(CURDATE() + INTERVAL 2 DAY, '06:00:00', '07:00:00', 10),
-(CURDATE() + INTERVAL 2 DAY, '18:00:00', '19:00:00', 8),
-(CURDATE() + INTERVAL 3 DAY, '07:00:00', '08:00:00', 10);
+-- -- Time slots (a few sample sessions) -------------------------
+-- INSERT INTO time_slots (slot_date, start_time, end_time, capacity) VALUES
+-- (CURDATE() + INTERVAL 1 DAY, '06:00:00', '07:00:00', 10),
+-- (CURDATE() + INTERVAL 1 DAY, '07:00:00', '08:00:00', 10),
+-- (CURDATE() + INTERVAL 1 DAY, '17:00:00', '18:00:00', 8),
+-- (CURDATE() + INTERVAL 2 DAY, '06:00:00', '07:00:00', 10),
+-- (CURDATE() + INTERVAL 2 DAY, '18:00:00', '19:00:00', 8),
+-- (CURDATE() + INTERVAL 3 DAY, '07:00:00', '08:00:00', 10);

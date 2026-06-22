@@ -1,17 +1,3 @@
-"""
-app.py  -  Main Flask application (all routes)
-Owner: Person 2 (Backend)
-
-Run it:
-    cd backend
-    python app.py
-Then open http://127.0.0.1:5000
-
-Routes are grouped: public/auth, member, admin.
-Each route renders a template from frontend/templates and passes the
-named variables listed above it (that list is the contract with the
-frontend person).
-"""
 import os
 import sys
 from datetime import date, timedelta
